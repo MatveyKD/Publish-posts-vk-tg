@@ -57,7 +57,8 @@ for index, row in enumerate(list_of_lists[1::], 2):
     data.append({
         'text': '\n'.join(text),
         'img': f'images/img_{index}.jpg',
-        'date': row[2],
+        'date': row[2].split()[0],
+        'time': row[2].split()[1],
         'platform': row[3].split()
     })
     worksheet.update_cell(index, 5, 'Добавлено в базу данных')
