@@ -38,7 +38,7 @@ def load_googlesheets_to_json(filename):
             if not i:
                 not_good += 1
         if not_good > 1:
-            worksheet.update_cell(index, 5, 'Ошибка')
+            worksheet.update_cell(index, 5, 'Не все значения введены')
             continue
         doc_url = row[0]
         text = []
@@ -62,6 +62,22 @@ def load_googlesheets_to_json(filename):
             'time': row[2].split()[1],
             'platform': row[3]
         })
-        worksheet.update_cell(index, 5, 'Добавлено в базу данных')
+        if row[4] != "Опубликовано":
+            worksheet.update_cell(index, 5, 'Добавлено в базу данных')
     with open(filename, 'w', encoding='utf-8') as file:
         json.dump(data, file, ensure_ascii=False)
+
+
+def change_status(index, status):
+    gc = gspread.service_account(filename='smm-planner-384116-1f650199dcd3.json')
+    sh = gc.open("Test")
+    worksheet = sh.worksheet("Class Data")
+    worksheet.update_cell(index+2, 5, status)
+
+
+def get_status(index):
+    gc = gspread.service_account(filename='smm-planner-384116-1f650199dcd3.json')
+    sh = gc.open("Test")
+    worksheet = sh.worksheet("Class Data")
+    rows = worksheet.get_all_values()
+    return rows[index+1][4]
