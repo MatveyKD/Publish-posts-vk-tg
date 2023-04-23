@@ -56,6 +56,7 @@ def load_googlesheets_to_json(filename):
         with open(f'images/img_{index}.jpg', 'wb+') as file:
             file.write(img_response.content)
         text = '\n'.join(text)
+        text = 'Даобыйьащиовлс - - - “Привет”                           23          432                               '
         text.replace('-', '–')
         text = ' '.join(text.split())
         s = text.split('"')
@@ -63,6 +64,10 @@ def load_googlesheets_to_json(filename):
             s[i] = chr(171) + s[i] + chr(187)
         text = ''.join(s)
         s = text.split("'")
+        for i in range(1, len(s), 2):
+            s[i] = chr(171) + s[i] + chr(187)
+        text = ''.join(s)
+        s = text.split("”")
         for i in range(1, len(s), 2):
             s[i] = chr(171) + s[i] + chr(187)
         text = ''.join(s)
