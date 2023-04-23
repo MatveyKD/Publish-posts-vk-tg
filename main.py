@@ -23,7 +23,6 @@ def publish_posts_if_time(tg_bot, vk_group_id, vk_acess_token, posts):
 
         currtime = datetime.now()
         post_datetime = datetime.strptime(f"{post_date} {post_time}", "%d.%m.%Y %H.%M.%S")
-        print(get_status(index))
         if currtime > post_datetime and get_status(index) != "Опубликовано":
             with open(post["img"], 'rb') as image:
                 if post["platform"] == "TG":
